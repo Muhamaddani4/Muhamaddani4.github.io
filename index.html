@@ -1,136 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Website Game Android & PC</title>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
+    <title>Website Game & Top Up - Home</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* --- Basic Reset & Body --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-		body {
-			font-family: arial;
-			padding: 10px;
-			background: #f1f1f1;
-		}
+        :root {
+            --bg-color: #f1f1f1;
+            --text-color: #333;
+            --card-bg: white;
+            --header-color: #333;
+            --footer-bg: #ddd;
+            --footer-text: #333;
+            --navbar-bg: #333;
+            --navbar-text: #f2f2f2;
+            --navbar-hover-bg: #555;
+            --navbar-hover-text: white;
+            --link-color: #0f3460;
+            --button-bg: #5cb85c;
+            --button-text: white;
+        }
 
-		/*Header / Blog Title */
-		.header {
-			padding: 30px;
-			text-align: center;
-			background: white;
-			background-repeat: no-repeat;
-		}
+        body.dark-mode {
+            --bg-color: #1a1a2e;
+            --text-color: #e0e1dd;
+            --card-bg: #16213e;
+            --header-color: #e0e1dd;
+            --footer-bg: #16213e;
+            --footer-text: #e0e1dd;
+            --navbar-bg: #0f3460;
+            --navbar-text: #e0e1dd;
+            --navbar-hover-bg: #16213e;
+            --link-color: #5a96e3;
+            --button-bg: #16213e;
+            --button-text: #e0e1dd;
+        }
 
-		.header h1 {
-			font-size: 50px;
-		}
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 10px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
 
-		/* Style the navigation bar */
-		.navbar {
-			overflow: hidden;
-			background-color: #333;
-		}
+        /* --- Header --- */
+        .header {
+            padding: 30px;
+            text-align: center;
+            background: var(--card-bg);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--header-color);
+        }
 
-		/* Style yhe navbar links */
-		.navbar a {
-			float: left;
-			display: block;
-			color: #f2f2f2;
-			text-align: center;
-			padding: 14px 16px;
-			text-decoration: none;
-		}
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
 
-		/* Change color on hover */
-		.navbar a:hover {
-			background-color: #ddd;
-			color: black;
-		}
+        /* --- Navbar --- */
+        .navbar {
+            overflow: hidden;
+            background-color: var(--navbar-bg);
+            border-radius: 8px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            align-items: center; /* Biar rapi vertikal */
+        }
 
-		/* Create two unequal colums that floats next to each other */
-		/*Left column */
-		.leftcolum {
-			float: left;
-			width: 75%;
-		}
+        .navbar a, .navbar #authSection span, .navbar #authSection a {
+            display: block;
+            color: var(--navbar-text);
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .navbar #authSection {
+             margin-left: auto; /* Pindahin ke kanan */
+             display: flex; /* Biar sejajar */
+             align-items: center;
+        }
 
-		/*Right column*/
-		.rightcolumn {
-			float: right;
-			width: 25%;
-			background-color: #f1f1f1;
-			padding-left: 20px;
-		}
+        .navbar #authSection span {
+            padding-right: 5px; /* Jarak ke logout */
+        }
+        
+        .navbar #authSection a#logoutLink {
+            background-color: #e74c3c; /* Warna beda buat logout */
+            border-radius: 4px;
+            margin: 0 10px;
+            padding: 8px 15px; /* Bikin lebih kecil */
+        }
+         .navbar #authSection a#logoutLink:hover {
+            background-color: #c0392b;
+         }
 
-		/* Fake image */
-		.fakeimg {
-			background-color: #aaa;
-			width: 100%;
-			padding: 20px;
-		}
 
-		/* Add a card effect for article */
-		.card {
-			background-color: white;
-			padding: 20px;
-			margin-top: 20px;
-		}
+        .navbar a:not(#logoutLink):hover, .navbar a.active {
+            background-color: var(--navbar-hover-bg);
+            color: var(--navbar-hover-text);
+        }
 
-		/*  Clear floats after the columns */
-		.row::after {
-			content: "";
-			display: table;
-			clear: both;
-		}
+        .navbar .icon {
+            display: none;
+            font-size: 24px;
+            padding: 10px 15px;
+            cursor: pointer; /* Kasih tau ini bisa diklik */
+        }
+        
+        #darkModeToggle {
+            /* margin-left: auto; (Udah dipindah ke #authSection) */
+            background: none;
+            border: 1px solid var(--navbar-text);
+            color: var(--navbar-text);
+            padding: 10px 15px;
+            margin: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            order: 5; /* Biar dia setelah authSection */
+        }
 
-		a {
-			text-decoration: none;
-		}
+        #darkModeToggle:hover {
+             background: var(--navbar-hover-bg);
+             color: var(--navbar-hover-text);
+        }
 
-		/* Footer */
-		.footer {
-			padding: 20px;
-			text-align: center;
-			background: #ddd;
-			margin-top: 20px;
-		}
-	</style>
+        /* --- Layout Utama --- */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .leftcolum {
+            flex: 70%;
+            padding-right: 20px;
+        }
+
+        .rightcolumn {
+            flex: 30%;
+        }
+
+        /* --- Card --- */
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .card h2, .card h3 {
+            margin-bottom: 15px;
+            color: var(--header-color);
+        }
+
+        /* --- Gambar & Icon --- */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .social-icons a img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-icons a:hover img {
+            opacity: 0.7;
+        }
+        
+        .main-image {
+           width: 100%; 
+           max-width: 700px;
+           height: auto; 
+           display: block;
+           margin: 20px auto;
+           border-radius: 8px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 25px;
+            text-align: center;
+            background: var(--footer-bg);
+            margin-top: 20px;
+            border-radius: 8px;
+            color: var(--footer-text);
+        }
+        
+        /* --- MEDIA QUERIES BUAT HP --- */
+        @media screen and (max-width: 768px) {
+            .leftcolum, .rightcolumn {
+                flex: 100%;
+                padding-right: 0;
+            }
+
+            .navbar {
+                justify-content: flex-start; /* Balikin ke kiri */
+            }
+
+            .navbar a:not(.icon), 
+            .navbar #authSection, 
+            .navbar #darkModeToggle {
+                display: none; /* Sembunyiin semua kecuali icon */
+            }
+
+            .navbar a.icon {
+                display: block; /* Munculin ikon hamburger */
+                margin-left: auto; /* Pindahin ikon ke kanan */
+            }
+
+            .navbar.responsive {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar.responsive a,
+            .navbar.responsive #authSection,
+            .navbar.responsive #darkModeToggle {
+                display: flex; /* Munculin lagi */
+                width: 100%;
+                text-align: left;
+                margin-left: 0; /* Reset margin */
+                order: 0; /* Reset order */
+            }
+             .navbar.responsive #authSection {
+                 flex-direction: column; /* Numpuk kalo di mode mobile */
+                 align-items: flex-start;
+                 padding: 10px 20px;
+             }
+            .navbar.responsive #authSection a#logoutLink {
+                margin: 10px 0 0 0; /* Atur jarak logout */
+            }
+
+            .navbar.responsive #darkModeToggle {
+                 width: auto; /* Biar nggak full width */
+                 margin: 10px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-	<div class="header">
-		<h1>Welcome To My WEBSITE Game & TOP UP GAME</h1>
-	</div>
+    <div class="header" data-aos="fade-down">
+        <h1>Welcome To My WEBSITE Game & TOP UP GAME</h1>
+        <p>Tempatnya cari game seru dan top up murah!</p>
+    </div>
 
-	<div class="navbar">
-		<a href="index.html">HOME</a>
-		<a href="game.html">LIST GAME & ABOUT</a>
-		<a href="topUP.html">TOP UP DM ALL GAME</a>
-	</div>
-	<div class="row">
-		<div class="rightcolumn">
-			<div class="card">
-				<h2> About me:</h2>
-				<a href="mailto: makhlukhidup254@gmail.com" target="_blank"><img src="./Image/Gmail.jpeg"
-						style="width: 50px; height: 50px;"></a>
-				<a href="https://api.whatsapp.com/send?phone=6285703876728&text=Halo%20kak%2C%20saya%20butuh%20bantuan"
-					target="_blank"><img src="./Image/WA.png" style="width: 50px; height: 50px;"></a>
-			</div>
-			<div class="card">
-				<h3>Follow me:</h3>
-				<a href="https://www.instagram.com/muhamad_dani4?igsh=YzljYTk1ODg3Zg==" target="_blank"><img
-						src="./Image/IG.jpeg" style="width: 50px; height: 50px;"></a>
-				<a href="https://www.tiktok.com/@muhamad_dani27?_r=1&_d=e5hmdad2g322f0&sec_uid=MS4wLjABAAAAyXXwtcZH9oRb8YxnvG6Y5NsO4dltNzocW1597AEiDbZ97cZE1onwAf00q_Z_qqeJ&share_author_id=6964507191869473793&sharer_language=id&source=h5_t&u_code=diia3cib954hdm&timestamp=1717422174&user_id=6964507191869473793&sec_user_id=MS4wLjABAAAAyXXwtcZH9oRb8YxnvG6Y5NsO4dltNzocW1597AEiDbZ97cZE1onwAf00q_Z_qqeJ&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7334599989387134726&share_link_id=52056cc4-2eeb-44f8-8374-7a7f9f659c16&share_app_id=1180&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
-					target="_blank"><img src="./Image/TT.jpeg" style="width: 50px; height: 50px;"></a>
-			</div>
-	</div>
-	<img src="./Image/home.png" style="width: 700px; height: 500px;">
-	
-	<div class="footer">
-		<h2>Coppyright &copy 2024 Dani</h2>
-	</div>
+    <div class="navbar" id="myNavbar">
+        <a href="index.html" class="active">HOME</a>
+        <a href="game.html">LIST GAME & ABOUT</a>
+        <a href="topUP.html">TOP UP DM ALL GAME</a>
+        <div id="authSection">
+            <a href="login.html">LOGIN</a> 
+            <a href="register.html">DAFTAR</a>
+        </div>
+        <button id="darkModeToggle">🌙/☀️</button>
+        <a href="javascript:void(0);" class="icon" id="hamburgerIcon">
+            ☰ </a>
+    </div>
+
+    <div class="row">
+        <div class="leftcolum">
+            <img src="./Image/home.png" alt="Welcome Image" class="main-image" data-aos="zoom-in">
+             <div class="card" data-aos="fade-up">
+                <h2>Berita Game Terbaru!</h2>
+                <p>Cek info game paling baru dan update patch di sini! (Konten bakal ditambahin...)</p>
+            </div>
+             <div class="card" data-aos="fade-up" data-aos-delay="100">
+                <h2>Promo Top Up Gila!</h2>
+                <p>Jangan sampe kelewatan diskon top up buat game favorit lo! (Konten bakal ditambahin...)</p>
+            </div>
+        </div>
+
+        <div class="rightcolumn">
+            <div class="card" data-aos="fade-left">
+                <h2>About Me:</h2>
+                <p>Mau tanya-tanya atau kerja sama? Kontak aja:</p>
+                <div class="social-icons">
+                    <a href="mailto: makhlukhidup254@gmail.com" target="_blank"><img src="./Image/Gmail.jpeg" alt="Gmail"></a>
+                    <a href="https://api.whatsapp.com/send?phone=6285860332698&text=Halo%20kak%2C%20saya%20butuh%20bantuan" target="_blank"><img src="./Image/WA.png" alt="WhatsApp"></a>
+                </div>
+            </div>
+            <div class="card" data-aos="fade-left" data-aos-delay="100">
+                <h3>Follow Me:</h3>
+                <p>Kepoin gue di sosmed:</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/muhamad_dani4?igsh=YzljYTk1ODg3Zg==" target="_blank"><img src="./Image/IG.jpeg" alt="Instagram"></a>
+                    <a href="tiktok.com/@xing_dong" target="_blank"><img src="./Image/TT.jpeg" alt="TikTok"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h2>Copyright &copy; <span id="copyrightYear"></span> Dani - Dibantu AI Gaul 😉</h2>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inisialisasi AOS
+        AOS.init({
+            duration: 800, // Durasi animasi (ms)
+            once: true // Animasi cuma jalan sekali
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            const navbar = document.getElementById('myNavbar');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            const copyrightYearSpan = document.getElementById('copyrightYear');
+            const authSection = document.getElementById('authSection');
+
+            // --- Dark Mode ---
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+            });
+
+            // --- Hamburger Menu ---
+            hamburgerIcon.addEventListener('click', () => {
+                navbar.classList.toggle('responsive');
+            });
+
+            // --- Copyright Year Otomatis ---
+            const currentYear = new Date().getFullYear();
+            copyrightYearSpan.textContent = currentYear;
+
+            // --- Cek Status Login & Update Navbar ---
+            const loggedInUser = localStorage.getItem('loggedInUser');
+
+            if (loggedInUser) {
+                // Kalo ada user login, ganti tampilannya
+                authSection.innerHTML = `
+                    <span>Hi, ${loggedInUser}!</span> 
+                    <a href="#" id="logoutLink">LOGOUT</a>
+                `;
+                
+                const logoutLink = document.getElementById('logoutLink');
+                logoutLink.addEventListener('click', (e) => {
+                    e.preventDefault(); // Biar nggak pindah halaman
+                    localStorage.removeItem('loggedInUser'); // Hapus status login
+                    alert('Lo udah logout!');
+                    window.location.reload(); // Reload halaman biar navbar balik
+                });
+
+            } else {
+                // Kalo nggak ada, biarin default (Login & Daftar)
+                authSection.innerHTML = `
+                    <a href="login.html">LOGIN</a> 
+                    <a href="register.html">DAFTAR</a>
+                `;
+            }
+        });
+    </script>
 </body>
-
 </html>

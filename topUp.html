@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Game & Top Up - Top Up</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* === COPY SEMUA CSS DARI index.html ATAU game.html KE SINI === */
+        /* Pastikan semua CSS dari halaman lain ada di sini, */
+        /* termasuk :root, body, .dark-mode, .header, .navbar, .row, */
+        /* .card, .footer, media queries, dll. */
+        /* ... (Anggap semua CSS udah di-copy) ... */
+
+        /* --- Style Khusus Halaman Top Up --- */
+        .topup-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Grid responsif */
+            gap: 25px;
+        }
+
+        .topup-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .topup-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+            border-color: #5a96e3; /* Kasih border pas hover */
+        }
+
+        .topup-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border-radius: 50%; /* Bikin bulat logonya */
+        }
+
+        .topup-card h3 {
+            margin-bottom: 15px;
+            color: var(--header-color);
+        }
+
+        .topup-card .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e67e22; /* Warna harga biar mencolok */
+            margin-bottom: 20px;
+        }
+
+        .topup-card button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .topup-card button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Jangan lupa copy semua CSS lainnya ke sini */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg-color: #f1f1f1; --text-color: #333; --card-bg: white; --header-color: #333; --footer-bg: #ddd; --footer-text: #333; --navbar-bg: #333; --navbar-text: #f2f2f2; --navbar-hover-bg: #555; --navbar-hover-text: white; --link-color: #0f3460; --button-bg: #5cb85c; --button-text: white; --game-card-bg: #eee; }
+        body.dark-mode { --bg-color: #1a1a2e; --text-color: #e0e1dd; --card-bg: #16213e; --header-color: #e0e1dd; --footer-bg: #16213e; --footer-text: #e0e1dd; --navbar-bg: #0f3460; --navbar-text: #e0e1dd; --navbar-hover-bg: #16213e; --link-color: #5a96e3; --button-bg: #16213e; --button-text: #e0e1dd; --game-card-bg: #0f3460; }
+        body { font-family: 'Arial', sans-serif; padding: 10px; background: var(--bg-color); color: var(--text-color); transition: background-color 0.3s ease, color 0.3s ease; line-height: 1.6; }
+        .header { padding: 30px; text-align: center; background: var(--card-bg); margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); color: var(--header-color); }
+        .header h1 { font-size: 36px; margin-bottom: 10px; }
+        .navbar { overflow: hidden; background-color: var(--navbar-bg); border-radius: 8px; display: flex; justify-content: flex-start; flex-wrap: wrap; }
+        .navbar a { display: block; color: var(--navbar-text); text-align: center; padding: 14px 20px; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease; }
+        .navbar a:hover, .navbar a.active { background-color: var(--navbar-hover-bg); color: var(--navbar-hover-text); }
+        .navbar .icon { display: none; font-size: 24px; padding: 10px 15px; }
+        #darkModeToggle { margin-left: auto; background: none; border: 1px solid var(--navbar-text); color: var(--navbar-text); padding: 10px 15px; margin: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 16px; transition: all 0.3s ease; }
+        #darkModeToggle:hover { background: var(--navbar-hover-bg); color: var(--navbar-hover-text); }
+        .row { display: flex; flex-wrap: wrap; margin-top: 20px; }
+        .leftcolum { flex: 100%; /* Halaman ini dibikin 1 kolom aja */ padding-right: 0px; }
+        .rightcolumn { display: none; /* Sembunyikan kolom kanan */ }
+        .card { background-color: var(--card-bg); padding: 25px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; color: var(--text-color); }
+        .card h2, .card h3 { margin-bottom: 15px; color: var(--header-color); }
+        img { max-width: 100%; height: auto; border-radius: 8px; }
+        .footer { padding: 25px; text-align: center; background: var(--footer-bg); margin-top: 20px; border-radius: 8px; color: var(--footer-text); }
+        @media screen and (max-width: 768px) { .leftcolum, .rightcolumn { flex: 100%; padding-right: 0; } .navbar { justify-content: space-between; } .navbar a:not(.icon) { display: none; } .navbar a.icon { display: block; order: 2; } #darkModeToggle { order: 1; margin-left: 10px; } .navbar.responsive { flex-direction: column; align-items: flex-start; } .navbar.responsive a { display: block; width: 100%; text-align: left; } .navbar.responsive #darkModeToggle { margin-left: 10px; margin-top: 10px; margin-bottom: 10px; width: calc(100% - 20px); text-align: center; } .header h1 { font-size: 28px; } }
+    </style>
+</head>
+<body>
+    <div class="header" data-aos="fade-down">
+        <h1>Pilih Game & Nominal Top Up</h1>
+        <p>Proses Cepat, Harga Bersahabat!</p>
+    </div>
+
+    <div class="navbar" id="myNavbar">
+        <a href="index.html">HOME</a>
+        <a href="game.html">LIST GAME</a>
+        <a href="topUP.html" class="active">TOP UP</a>
+        <a href="login.html">LOGIN</a>
+        <a href="register.html">DAFTAR</a>
+        <button id="darkModeToggle">🌙/☀️</button>
+        <a href="javascript:void(0);" class="icon" id="hamburgerIcon">☰</a>
+    </div>
+
+    <div class="row">
+        <div class="leftcolum">
+            <div class="card" data-aos="fade-up">
+                <h2>Pilih Game Favoritmu:</h2>
+                <div class="topup-grid">
+                    <div class="topup-card" data-aos="zoom-in">
+                        <img src="./Image/PUBG.webp" alt="PUBG Mobile"> <h3>PUBG Mobile</h3>
+                        <p>100 UC</p>
+                        <p class="price">Rp 20.000</p>
+                        <button>Beli Sekarang!</button>
+                    </div>
+
+                    <div class="topup-card" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2024/04/03/kode-redeem-ff-hari-ini-pemain-free-fire-bisa-dapat-token-gratis-2_169.jpeg?w=620" alt="Free Fire">
+                        <h3>Free Fire</h3>
+                        <p>140 Diamonds</p>
+                        <p class="price">Rp 25.000</p>
+                        <button>Beli Sekarang!</button>
+                    </div>
+
+                    <div class="topup-card" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2022/04/05/league-of-legends-wild-rift_169.jpeg?w=620" alt="Wild Rift">
+                        <h3>Wild Rift</h3>
+                        <p>300 Wild Cores</p>
+                        <p class="price">Rp 49.000</p>
+                        <button>Beli Sekarang!</button>
+                    </div>
+                     </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h2>Copyright &copy; 2024 Dani - Dibantu AI Gaul 😉</h2>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // === COPY SEMUA JS DARI index.html KE SINI ===
+        // Pastikan semua JS ada di sini (AOS init, Dark Mode, Hamburger)
+        AOS.init({ duration: 800, once: true });
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            const navbar = document.getElementById('myNavbar');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            if (localStorage.getItem('darkMode') === 'enabled') { body.classList.add('dark-mode'); }
+            darkModeToggle.addEventListener('click', () => { body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled'); });
+            hamburgerIcon.addEventListener('click', () => { navbar.classList.toggle('responsive'); });
+
+            // Tambahan JS khusus halaman Top Up (kalo perlu)
+            const buyButtons = document.querySelectorAll('.topup-card button');
+            buyButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    alert('Fitur pembelian belum jadi, bro! Ini cuma contoh. Nanti bisa dihubungin ke WA atau form.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

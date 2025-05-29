@@ -1,182 +1,502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>List Game & ABOUT</title>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
+    <title>Website Game & Top Up - List Game</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        /* --- Basic Reset & Body --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-		body {
-			font-family: arial;
-			padding: 10px;
-			background: #f1f1f1;
-		}
+        :root {
+            --bg-color: #f1f1f1;
+            --text-color: #333;
+            --card-bg: white;
+            --header-color: #333;
+            --footer-bg: #ddd;
+            --footer-text: #333;
+            --navbar-bg: #333;
+            --navbar-text: #f2f2f2;
+            --navbar-hover-bg: #555;
+            --navbar-hover-text: white;
+            --link-color: #0f3460;
+            --button-bg: #5cb85c;
+            --button-text: white;
+            --game-card-bg: #eee;
+        }
 
-		/*Header / Blog Title */
-		.header {
-			padding: 30px;
-			text-align: center;
-			background: white;
-			background-image: url("header.png");
-			background-repeat: no-repeat;
-		}
+        body.dark-mode {
+            --bg-color: #1a1a2e;
+            --text-color: #e0e1dd;
+            --card-bg: #16213e;
+            --header-color: #e0e1dd;
+            --footer-bg: #16213e;
+            --footer-text: #e0e1dd;
+            --navbar-bg: #0f3460;
+            --navbar-text: #e0e1dd;
+            --navbar-hover-bg: #16213e;
+            --link-color: #5a96e3;
+            --button-bg: #16213e;
+            --button-text: #e0e1dd;
+            --game-card-bg: #0f3460;
+        }
 
-		.header h1 {
-			font-size: 50px;
-		}
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 10px;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
 
-		/* Style the navigation bar */
-		.navbar {
-			overflow: hidden;
-			background-color: #333;
-		}
+        /* --- Header --- */
+        .header {
+            padding: 30px;
+            text-align: center;
+            background: var(--card-bg);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            color: var(--header-color);
+        }
 
-		/* Style yhe navbar links */
-		.navbar a {
-			float: left;
-			display: block;
-			color: #f2f2f2;
-			text-align: center;
-			padding: 14px 16px;
-			text-decoration: none;
-		}
+        .header h1 {
+            font-size: 36px;
+        }
 
-		/* Change color on hover */
-		.navbar a:hover {
-			background-color: #ddd;
-			color: black;
-		}
+        /* --- Navbar (Sama kayak index.html) --- */
+        .navbar {
+            overflow: hidden;
+            background-color: var(--navbar-bg);
+            border-radius: 8px;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            align-items: center;
+        }
 
-		/* Create two unequal colums that floats next to each other */
-		/*Left column */
-		.leftcolum {
-			float: left;
-			width: 75%;
-		}
+        .navbar a, .navbar #authSection span, .navbar #authSection a {
+            display: block;
+            color: var(--navbar-text);
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .navbar #authSection {
+             margin-left: auto;
+             display: flex;
+             align-items: center;
+        }
 
-		/*Right column*/
-		.rightcolumn {
-			float: right;
-			width: 25%;
-			background-color: #f1f1f1;
-			padding-left: 20px;
-		}
+        .navbar #authSection span {
+            padding-right: 5px;
+        }
+        
+        .navbar #authSection a#logoutLink {
+            background-color: #e74c3c;
+            border-radius: 4px;
+            margin: 0 10px;
+            padding: 8px 15px;
+        }
+         .navbar #authSection a#logoutLink:hover {
+            background-color: #c0392b;
+         }
 
-		/* Fake image */
-		.fakeimg {
-			background-color: #aaa;
-			width: 100%;
-			padding: 20px;
-		}
+        .navbar a:not(#logoutLink):hover, .navbar a.active {
+            background-color: var(--navbar-hover-bg);
+            color: var(--navbar-hover-text);
+        }
 
-		/* Add a card effect for article */
-		.card {
-			background-color: white;
-			padding: 20px;
-			margin-top: 20px;
-		}
+        .navbar .icon {
+            display: none;
+            font-size: 24px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        
+        #darkModeToggle {
+            background: none;
+            border: 1px solid var(--navbar-text);
+            color: var(--navbar-text);
+            padding: 10px 15px;
+            margin: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            order: 5;
+        }
 
-		/*  Clear floats after the columns */
-		.row::after {
-			content: "";
-			display: table;
-			clear: both;
-		}
+        #darkModeToggle:hover {
+             background: var(--navbar-hover-bg);
+             color: var(--navbar-hover-text);
+        }
 
-		a {
-			text-decoration: none;
-		}
+        /* --- Layout Utama --- */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
 
-		/* Footer */
-		.footer {
-			padding: 20px;
-			text-align: center;
-			background: #ddd;
-			margin-top: 20px;
-		}
-	</style>
+        .leftcolum {
+            flex: 70%;
+            padding-right: 20px;
+        }
+
+        .rightcolumn {
+            flex: 30%;
+        }
+
+        /* --- Card --- */
+        .card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+        }
+
+        .card h2, .card h3 {
+            margin-bottom: 15px;
+            margin-top: 10px; /* Jarak antar judul game */
+            color: var(--header-color);
+            border-bottom: 2px solid var(--link-color); /* Garis bawah judul */
+            padding-bottom: 5px;
+        }
+        
+        .card p.suggestion {
+            text-align: right;
+            font-style: italic;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        /* --- Gambar & Icon --- */
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .social-icons a img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-icons a:hover img {
+            opacity: 0.7;
+        }
+        
+        /* Bikin gambar game jadi grid */
+        .game-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Auto fit & ukuran min */
+            gap: 20px;
+            margin-bottom: 30px; /* Jarak antar section game */
+        }
+
+        .game-list a {
+            text-decoration: none;
+            color: var(--text-color);
+            text-align: center;
+            display: block;
+            background-color: var(--game-card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .game-list a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        .game-list img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        
+        .game-list p {
+            font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            padding: 25px;
+            text-align: center;
+            background: var(--footer-bg);
+            margin-top: 20px;
+            border-radius: 8px;
+            color: var(--footer-text);
+        }
+        
+        /* --- MEDIA QUERIES --- */
+        @media screen and (max-width: 992px) {
+            .game-list {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .leftcolum, .rightcolumn {
+                flex: 100%;
+                padding-right: 0;
+            }
+
+            .navbar {
+                justify-content: flex-start;
+            }
+
+            .navbar a:not(.icon), 
+            .navbar #authSection, 
+            .navbar #darkModeToggle {
+                display: none;
+            }
+
+            .navbar a.icon {
+                display: block;
+                margin-left: auto;
+            }
+
+            .navbar.responsive {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .navbar.responsive a,
+            .navbar.responsive #authSection,
+            .navbar.responsive #darkModeToggle {
+                display: flex;
+                width: 100%;
+                text-align: left;
+                margin-left: 0;
+                order: 0;
+            }
+             .navbar.responsive #authSection {
+                 flex-direction: column;
+                 align-items: flex-start;
+                 padding: 10px 20px;
+             }
+            .navbar.responsive #authSection a#logoutLink {
+                margin: 10px 0 0 0;
+            }
+            .navbar.responsive #darkModeToggle {
+                 width: auto;
+                 margin: 10px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .game-list {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            }
+        }
+         @media screen and (max-width: 480px) {
+             .game-list {
+                grid-template-columns: repeat(2, 1fr); /* Jadi 2 kolom fix di HP kecil */
+            }
+         }
+    </style>
 </head>
 
 <body>
-	<div class="header">
-		<h1>Welcome To My WEBSITE Game Android & PC</h1>
-	</div>
+    <div class="header" data-aos="fade-down">
+        <h1>List Game Keren & Info</h1>
+        <p>Temukan game favoritmu di sini!</p>
+    </div>
 
-	<div class="navbar">
-		<a href="index.html">HOME</a>
-	</div>
+    <div class="navbar" id="myNavbar">
+        <a href="index.html">HOME</a>
+        <a href="game.html" class="active">LIST GAME & ABOUT</a>
+        <a href="topUP.html">TOP UP DM ALL GAME</a>
+        <div id="authSection">
+            <a href="login.html">LOGIN</a> 
+            <a href="register.html">DAFTAR</a>
+        </div>
+        <button id="darkModeToggle">🌙/☀️</button>
+        <a href="javascript:void(0);" class="icon" id="hamburgerIcon">
+            ☰ </a>
+    </div>
 
-	<div class="row">
-		<div class="leftcolum">
-			<div class="card">
-				<h2>Game Android & PC:</h2>
-				<p align="right">Ada Saran untuk Game Android atau Game PC Lainnya? chat Whatsapp atau Email >></p>
-				<a href="https://play.google.com/store/apps/details?id=com.vng.sea.metalslug" target="_blank"><img
-						src="https://assets.jalantikus.com/assets/cache/560/300/userfiles/2023/08/28/Body-Artikel-560-x-300-77713.jpg" style="width: 50%; height: 50%; border-radius: 10%;" alt="image">
-					<p>METAL SLUG</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.tencent.ig"><img src="./Image/PUBG.webp"
-						alt="image" style="width: 50%; height: 250px; border-radius: 10%;">
-					<p>PUBG MOBILE</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.dts.freefireth"><img
-						src="https://akcdn.detik.net.id/community/media/visual/2024/04/03/kode-redeem-ff-hari-ini-pemain-free-fire-bisa-dapat-token-gratis-2_169.jpeg?w=620" style="width: 50%; height: 50%; border-radius: 10%;" alt="image">
-					<p>Free Fire</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.garena.game.codm"><img src="https://akcdn.detik.net.id/community/media/visual/2019/05/20/4fe47098-d9e7-4454-905f-22711d27c98e_169.jpeg?w=620" alt="image"
-						style="width: 50%; height: 50%; border-radius: 10%;">
-					<p>Call of Duty: Mobile - Garena</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.miraclegames.farlight84"><img
-						src="https://akcdn.detik.net.id/community/media/visual/2024/04/13/game-android-terpopuler-dan-gratis-asyik-dimainkan-bareng-keluarga_169.png?w=620" alt="image" style="width: 50%; height: 50%; border-radius: 10%;">
-					<p>Farlight 84</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.riotgames.league.wildrift"><img
-						src="https://akcdn.detik.net.id/community/media/visual/2022/04/05/league-of-legends-wild-rift_169.jpeg?w=620" alt="image" style="width: 50%; height: 50%; border-radius: 10%;">
-					<p>Leauge of Legends: Wild Rift</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.garena.game.kgid"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJaQOU2_az8dnefnwX9Ie4Jn2A7R_BACT0rZDWO9kBjQ&s" alt="image"
-						style="width: 50%; height: 250px; border-radius: 10%;">
-					<p>Garena AOV: 5v5 fest</p>
-				</a><a href="https://play.google.com/store/apps/details?id=jp.pokemon.pokemonunite"><img
-						src="https://akcdn.detik.net.id/community/media/visual/2021/06/21/pokemon-unite-game-moba-dari-pokemon-company-yang-siap-rilis-di-mobile_169.jpeg?w=620" alt="image" style="width: 50%; height: 50%; border-radius: 10%;">
-					<p>Pokemon UNITE</p>
-				</a>
-				<a href="https://play.google.com/store/apps/details?id=com.levelinfinite.sgameGlobal"><img
-						src="https://akcdn.detik.net.id/community/media/visual/2024/04/06/cara-download-dan-install-honor-of-kings-di-android-dan-ios_169.jpeg?w=620" alt="image" style="width: 50%; height: 50%; border-radius: 10%;">
-					<p>Honor of Kings</p>
-				</a>
-			</div>
-		</div>
-		<div class="rightcolumn">
-			<div class="card">
-				<h2> About me:</h2>
-				<a href="mailto: makhlukhidup254@gmail.com" target="_blank"><img src="./Image/Gmail.jpeg"
-						style="width: 50px; height: 50px;"></a>
-				<a href="https://api.whatsapp.com/send?phone=6285703876728&text=Halo%20kak%2C%20saya%20butuh%20bantuan"
-					target="_blank"><img src="./Image/WA.png" style="width: 50px; height: 50px;"></a>
-			</div>
+    <div class="row">
+        <div class="leftcolum">
+            <div class="card" data-aos="fade-up">
+                <p class="suggestion">Ada Saran untuk Game Lainnya? chat Whatsapp atau Email >></p>
 
-			<div class="card">
-				<h3> Game PC: ( Coming Soon )</h3>
-			</div>
+                <h2>Game Mobile Lagi Rame:</h2>
+                <div class="game-list">
+                    <a href="https://play.google.com/store/apps/details?id=com.tencent.ig" target="_blank" data-aos="zoom-in">
+                        <img src="./Image/PUBG.webp" alt="PUBG Mobile">
+                        <p>PUBG MOBILE</p>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.dts.freefireth" target="_blank" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2024/04/03/kode-redeem-ff-hari-ini-pemain-free-fire-bisa-dapat-token-gratis-2_169.jpeg?w=620" alt="Free Fire">
+                        <p>Free Fire</p>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.mobile.legends" target="_blank" data-aos="zoom-in" data-aos-delay="100"> <img src="https://cdn.oneesports.id/cdn-data/sites/2/2023/07/MLBBLogo-1024x576.jpg" alt="Mobile Legends">
+                        <p>Mobile Legends</p>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.garena.game.codm" target="_blank" data-aos="zoom-in" data-aos-delay="150">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2019/05/20/4fe47098-d9e7-4454-905f-22711d27c98e_169.jpeg?w=620" alt="CODM">
+                        <p>Call of Duty: Mobile</p>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.riotgames.league.wildrift" target="_blank" data-aos="zoom-in">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2022/04/05/league-of-legends-wild-rift_169.jpeg?w=620" alt="Wild Rift">
+                        <p>Wild Rift</p>
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=com.levelinfinite.sgameGlobal" target="_blank" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="https://akcdn.detik.net.id/community/media/visual/2024/04/06/cara-download-dan-install-honor-of-kings-di-android-dan-ios_169.jpeg?w=620" alt="Honor of Kings">
+                        <p>Honor of Kings</p>
+                    </a>
+                     <a href="https://hsr.hoyoverse.com/id-id/" target="_blank" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Honkai_Star_Rail_cover.png/220px-Honkai_Star_Rail_cover.png" alt="Honkai Star Rail">
+                        <p>Honkai: Star Rail</p>
+                    </a>
+                    <a href="https://genshin.hoyoverse.com/id/" target="_blank" data-aos="zoom-in" data-aos-delay="150">
+                        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Genshin_Impact_cover.png/220px-Genshin_Impact_cover.png" alt="Genshin Impact">
+                        <p>Genshin Impact</p>
+                    </a>
+                </div>
 
-			<div class="card">
-				<h3>Follow me:</h3>
-				<a href="https://www.instagram.com/muhamad_dani4?igsh=YzljYTk1ODg3Zg==" target="_blank"><img
-						src="./Image/IG.jpeg" style="width: 50px; height: 50px;"></a>
-				<a href="https://www.tiktok.com/@muhamad_dani27?_r=1&_d=e5hmdad2g322f0&sec_uid=MS4wLjABAAAAyXXwtcZH9oRb8YxnvG6Y5NsO4dltNzocW1597AEiDbZ97cZE1onwAf00q_Z_qqeJ&share_author_id=6964507191869473793&sharer_language=id&source=h5_t&u_code=diia3cib954hdm&timestamp=1717422174&user_id=6964507191869473793&sec_user_id=MS4wLjABAAAAyXXwtcZH9oRb8YxnvG6Y5NsO4dltNzocW1597AEiDbZ97cZE1onwAf00q_Z_qqeJ&utm_source=copy&utm_campaign=client_share&utm_medium=android&share_iid=7334599989387134726&share_link_id=52056cc4-2eeb-44f8-8374-7a7f9f659c16&share_app_id=1180&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb0229&social_share_type=5&enable_checksum=1"
-					target="_blank"><img src="./Image/TT.jpeg" style="width: 50px; height: 50px;"></a>
-			</div>
-		</div>
-	</div>
+                <h2>Game PC Wajib Coba:</h2>
+                 <div class="game-list">
+                     <a href="https://playvalorant.com/id-id/" target="_blank" data-aos="zoom-in">
+                        <img src="https://cdn1.dotesports.com/wp-content/uploads/2020/03/10153329/Valorant-feature.jpg" alt="Valorant">
+                        <p>Valorant</p>
+                    </a>
+                     <a href="https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/" target="_blank" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/578080/capsule_616x353.jpg?t=1715911069" alt="PUBG: Battlegrounds">
+                        <p>PUBG: Battlegrounds</p>
+                    </a>
+                     <a href="https://www.ea.com/games/apex-legends" target="_blank" data-aos="zoom-in" data-aos-delay="100">
+                        <img src="https://media.contentapi.ea.com/content/dam/apex-legends/images/2019/01/apex-featured-image-16x9.jpg.adapt.crop16x9.1023w.jpg" alt="Apex Legends">
+                        <p>Apex Legends</p>
+                    </a>
+                     <a href="https://store.steampowered.com/app/271590/Grand_Theft_Auto_V/" target="_blank" data-aos="zoom-in" data-aos-delay="150">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_616x353.jpg?t=1709923831" alt="GTA V">
+                        <p>Grand Theft Auto V</p>
+                    </a>
+                    <a href="https://store.steampowered.com/app/1091500/Cyberpunk_2077/" target="_blank" data-aos="zoom-in">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg?t=1711620491" alt="Cyberpunk 2077">
+                        <p>Cyberpunk 2077</p>
+                    </a>
+                     <a href="https://store.steampowered.com/app/1245620/ELDEN_RING/" target="_blank" data-aos="zoom-in" data-aos-delay="50">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg?t=1714044598" alt="Elden Ring">
+                        <p>Elden Ring</p>
+                    </a>
+                 </div>
+            </div>
+        </div>
 
-	<div class="footer">
-		<h2>Coppyright By @Dani</h2>
-	</div>
+        <div class="rightcolumn">
+            <div class="card" data-aos="fade-left">
+                <h2>About Me:</h2>
+                 <p>Mau tanya-tanya atau kerja sama? Kontak aja:</p>
+                <div class="social-icons">
+                    <a href="mailto: makhlukhidup254@gmail.com" target="_blank"><img src="./Image/Gmail.jpeg" alt="Gmail"></a>
+                    <a href="https://api.whatsapp.com/send?phone=6285860332698&text=Halo%20kak%2C%20saya%20butuh%20bantuan" target="_blank"><img src="./Image/WA.png" alt="WhatsApp"></a>
+                </div>
+            </div>
+
+            <div class="card" data-aos="fade-left" data-aos-delay="100">
+                <h3>Info Lain:</h3>
+                <p>Website ini masih dalam pengembangan. Saran dan masukan lo sangat berarti!</p>
+            </div>
+
+            <div class="card" data-aos="fade-left" data-aos-delay="200">
+                <h3>Follow Me:</h3>
+                 <p>Kepoin gue di sosmed:</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/muhamad_dani4?igsh=YzljYTk1ODg3Zg==" target="_blank"><img src="./Image/IG.jpeg" alt="Instagram"></a>
+                    <a href="tiktok.com/@xing_dong" target="_blank"><img src="./Image/TT.jpeg" alt="TikTok"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h2>Copyright &copy; <span id="copyrightYear"></span> Dani - Dibantu AI Gaul 😉</h2>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inisialisasi AOS
+        AOS.init({
+            duration: 800,
+            once: true 
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const body = document.body;
+            const navbar = document.getElementById('myNavbar');
+            const hamburgerIcon = document.getElementById('hamburgerIcon');
+            const copyrightYearSpan = document.getElementById('copyrightYear'); // Tambah ini
+            const authSection = document.getElementById('authSection'); // Tambah ini
+
+            // --- Dark Mode ---
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+            darkModeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
+            });
+
+            // --- Hamburger Menu ---
+            hamburgerIcon.addEventListener('click', () => {
+                navbar.classList.toggle('responsive');
+            });
+
+            // --- Copyright Year Otomatis --- (Tambah ini)
+            const currentYear = new Date().getFullYear();
+            copyrightYearSpan.textContent = currentYear;
+
+            // --- Cek Status Login & Update Navbar --- (Tambah ini)
+            const loggedInUser = localStorage.getItem('loggedInUser');
+
+            if (loggedInUser) {
+                authSection.innerHTML = `
+                    <span>Hi, ${loggedInUser}!</span> 
+                    <a href="#" id="logoutLink">LOGOUT</a>
+                `;
+                const logoutLink = document.getElementById('logoutLink');
+                logoutLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('loggedInUser');
+                    alert('Lo udah logout!');
+                    window.location.reload();
+                });
+            } else {
+                authSection.innerHTML = `
+                    <a href="login.html">LOGIN</a> 
+                    <a href="register.html">DAFTAR</a>
+                `;
+            }
+        });
+    </script>
 </body>
-
 </html>
