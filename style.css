@@ -1,0 +1,256 @@
+/* --- Basic Reset & Body --- */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* DEFINISI WARNA (PALET) */
+:root {
+  /* --- MODE TERANG (DEFAULT) --- */
+  --bg-color: #f4f4f4;       /* Background Halaman */
+  --text-color: #333333;     /* Warna Teks Utama */
+  --card-bg: #ffffff;        /* Background Kartu/Kotak */
+  --header-text: #333333;    /* Warna Judul */
+  
+  --navbar-bg: #333333;      /* Background Navbar */
+  --navbar-text: #ffffff;    /* Teks Navbar */
+  --navbar-hover-bg: #555;   /* Hover Navbar */
+  
+  --footer-bg: #dddddd;      /* Background Footer */
+  --footer-text: #333333;    /* Teks Footer */
+  
+  --link-color: #0f3460;
+  --button-bg: #5cb85c;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+  /* --- MODE GELAP --- */
+  --bg-color: #0f172a;       /* Background Halaman (Biru Gelap Modern) */
+  --text-color: #e2e8f0;     /* Warna Teks Utama (Putih Tulang) */
+  --card-bg: #1e293b;        /* Background Kartu (Biru Abu) */
+  --header-text: #f8fafc;    /* Warna Judul */
+  
+  --navbar-bg: #1e293b;      /* Background Navbar */
+  --navbar-text: #e2e8f0;    /* Teks Navbar */
+  --navbar-hover-bg: #334155;/* Hover Navbar */
+  
+  --footer-bg: #020617;      /* Background Footer */
+  --footer-text: #94a3b8;    /* Teks Footer */
+  
+  --link-color: #38bdf8;
+  --button-bg: #1e293b;
+  --shadow-color: rgba(0, 0, 0, 0.5); /* Bayangan lebih gelap */
+}
+
+body {
+  font-family: "Poppins", "Arial", sans-serif; /* Tambah Poppins biar modern */
+  padding: 10px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  line-height: 1.6;
+}
+
+/* --- Header --- */
+.header {
+  padding: 30px;
+  text-align: center;
+  background-color: var(--card-bg); /* Pakai warna kartu */
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  color: var(--header-text);
+}
+
+.header h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+/* --- Navbar --- */
+.navbar {
+  overflow: hidden;
+  background-color: var(--navbar-bg);
+  border-radius: 8px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.navbar a,
+.navbar button {
+  display: block;
+  color: var(--navbar-text);
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover Efek */
+.navbar a:hover, 
+.navbar button:hover {
+  background-color: var(--navbar-hover-bg);
+  color: white;
+}
+
+.navbar a.active {
+  background-color: var(--navbar-hover-bg);
+  font-weight: bold;
+}
+
+/* Tombol Dark Mode & Hamburger */
+#darkModeToggle {
+  margin-left: auto; /* Dorong ke kanan */
+}
+
+.navbar .icon {
+  display: none;
+  font-size: 24px;
+  padding: 14px 20px;
+}
+
+/* --- Layout --- */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.rightcolumn {
+  width: 100%;
+}
+
+/* --- Card (Kotak Konten) --- */
+.card {
+  background-color: var(--card-bg);
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text-color);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+.card h2,
+.card h3 {
+  margin-bottom: 15px;
+  color: var(--header-text);
+  border-bottom: 2px solid var(--navbar-hover-bg); /* Garis bawah judul */
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* --- Widget Waktu --- */
+.widget-waktu {
+  text-align: center;
+  color: #a855f7; /* Ungu Neon */
+  font-family: 'Courier New', Courier, monospace; /* Font ala digital */
+  margin: 20px 0;
+  text-shadow: 0 0 5px rgba(168, 85, 247, 0.5);
+}
+
+#jam {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+#tanggal {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* --- SOSIAL MEDIA ICON (Updated) --- */
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: flex-start; /* Icon di kiri */
+}
+
+.social-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: #f0f0f0; /* Default abu terang */
+  border-radius: 50%;
+  text-decoration: none;
+  color: #333;
+  font-size: 24px;
+  transition: all 0.4s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Warna icon di mode gelap */
+body.dark-mode .social-link {
+  background-color: #334155;
+  color: #fff;
+}
+
+/* Animasi Hover */
+.social-link:hover {
+  transform: translateY(-5px) rotate(360deg);
+  color: white;
+}
+
+/* Warna Brand */
+.social-link.instagram:hover { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+.social-link.tiktok:hover { background-color: #000; }
+.social-link.whatsapp:hover { background-color: #25d366; }
+.social-link.gmail:hover { background-color: #ea4335; }
+
+
+/* --- Footer --- */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  margin-top: 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+/* --- RESPONSIF (HP) --- */
+@media screen and (max-width: 768px) {
+  .navbar a:not(.icon),
+  .navbar #darkModeToggle {
+    display: none;
+  }
+
+  .navbar a.icon {
+    display: block;
+    margin-left: auto; /* Hamburger di kanan */
+  }
+
+  .navbar.responsive {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar.responsive a,
+  .navbar.responsive #darkModeToggle {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .navbar.responsive #darkModeToggle {
+      border-top: 1px solid rgba(255,255,255,0.1);
+  }
+}
